@@ -13,4 +13,4 @@ docker rmi ${reso_addr}:${tag}
 
 docker pull ${reso_addr}:${tag}
 
-docker run --network host --name=${comtainer_name} -d ${reso_addr}:${tag}
+docker run -p 10000:8080 --name=${comtainer_name} -d ${reso_addr}:${tag}

@@ -1,3 +1,3 @@
 # im-zero
 
-使用go-zero编写的im系统，正在完善中
+使用go-zero编写的im系统，正在开发中

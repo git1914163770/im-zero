@@ -26,6 +26,7 @@ message LoginReq{
   string phone=1;
   string password=2;
 }
+
 message LoginResp{
   string token=1;
   int64 expire =2 ;
@@ -39,6 +40,7 @@ message RegisterReq{
   string avatar=4;
   int32 sex=5;
 }
+
 message RegisterResp{
   string token=1;
   int64 expire=2;
@@ -47,6 +49,7 @@ message RegisterResp{
 message GetUserInfoReq{
   string id=1;
 }
+
 message GetUserInfoResp{
   UserEntity user =1;
 }

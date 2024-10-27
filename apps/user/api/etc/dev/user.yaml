@@ -1,0 +1,14 @@
+Name: user
+Host: 0.0.0.0
+Port: 8888
+
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 0.0.0.0:2379
+    Key: user.rpc
+
+Jwt:
+  AccessSecret: im-go-zero
+  AccessExpire: 8640000
