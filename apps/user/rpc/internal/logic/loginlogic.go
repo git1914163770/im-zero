@@ -41,7 +41,7 @@ func (l *LoginLogic) Login(in *user.LoginReq) (*user.LoginResp, error) {
 		if err == models.ErrNotFound {
 			return nil, errors.WithStack(ErrPhoneNotRegister)
 		}
-		return nil, errors.Wrapf(xerr.NewDBErr(), "find user by phone err %v , req %v", err, in.Phone)
+		return nil, errors.Wrapf(xerr.NewDBErr(), "Find User By Phone Number Err %v , req %v ", err, in.Phone)
 	}
 
 	// 密码验证
@@ -51,13 +51,13 @@ func (l *LoginLogic) Login(in *user.LoginReq) (*user.LoginResp, error) {
 
 	// 生成token
 	now := time.Now().Unix()
-	token, err := ctxdata.GenJwtToken(l.svcCtx.Config.Jwt.AccessSecret, now, l.svcCtx.Config.Jwt.AccessExpire,
-		userEntity.Id)
+	token, err := ctxdata.GenJwtToken(l.svcCtx.Config.Jwt.AccessSecret, now, l.svcCtx.Config.Jwt.AccessExpire, userEntity.Id)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewDBErr(), "ctxdata get jwt token err %v", err)
+		return nil, errors.Wrapf(xerr.NewDBErr(), "Ctxdata Get Token Err %v", err)
 	}
 
 	return &user.LoginResp{
+		Id:     userEntity.Id,
 		Token:  token,
 		Expire: now + l.svcCtx.Config.Jwt.AccessExpire,
 	}, nil

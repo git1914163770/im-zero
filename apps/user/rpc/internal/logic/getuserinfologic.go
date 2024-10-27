@@ -2,9 +2,10 @@ package logic
 
 import (
 	"context"
-	"errors"
 	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 	"im-zero/apps/user/models"
+	"im-zero/pkg/xerr"
 
 	"im-zero/apps/user/rpc/internal/svc"
 	"im-zero/apps/user/rpc/user"
@@ -32,13 +33,12 @@ func (l *GetUserInfoLogic) GetUserInfo(in *user.GetUserInfoReq) (*user.GetUserIn
 	userEntity, err := l.svcCtx.UsersModel.FindOne(l.ctx, in.Id)
 	if err != nil {
 		if err == models.ErrNotFound {
-			return nil, ErrUserNotFound
+			return nil, errors.WithStack(ErrUserNotFound)
 		}
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewDBErr(), "No Such User' s Id Like %s ", in.Id)
 	}
 	var resp user.UserEntity
-	copier.Copy(&resp, userEntity)
-
+	_ = copier.Copy(&resp, userEntity)
 	return &user.GetUserInfoResp{
 		User: &resp,
 	}, nil

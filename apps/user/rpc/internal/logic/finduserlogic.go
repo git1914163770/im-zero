@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"im-zero/apps/user/models"
+	"im-zero/pkg/xerr"
 
 	"im-zero/apps/user/rpc/internal/svc"
 	"im-zero/apps/user/rpc/user"
@@ -27,7 +28,6 @@ func NewFindUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FindUser
 }
 
 func (l *FindUserLogic) FindUser(in *user.FindUserReq) (*user.FindUserResp, error) {
-
 	var (
 		userEntitys []*models.Users
 		err         error
@@ -43,7 +43,7 @@ func (l *FindUserLogic) FindUser(in *user.FindUserReq) (*user.FindUserResp, erro
 		userEntitys, err = l.svcCtx.UsersModel.ListByIds(l.ctx, in.Ids)
 	}
 	if err != nil {
-		return nil, errors.New("No Such Users")
+		return nil, errors.Wrap(xerr.NewDBErr(), "No Such Users")
 	}
 	var resp []*user.UserEntity
 	_ = copier.Copy(&resp, userEntitys)

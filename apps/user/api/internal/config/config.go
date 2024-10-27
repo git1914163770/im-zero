@@ -12,6 +12,6 @@ type Config struct {
 
 	Jwt struct {
 		AccessSecret string
-		AccessExpire int64
+		//AccessExpire int64
 	}
 }

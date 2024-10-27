@@ -1,6 +1,6 @@
 syntax = "v1"
 
-info (
+info(
 	title: "用户服务的实例对象"
 )
 
@@ -11,28 +11,26 @@ import (
 // -------------- user api v1 --------------
 // no need login
 @server (
-	prefix: v1/user
-	group:  user
+	prefix :v1/user
+	group:user
 )
-service user {
-	@doc "用户注册"
+
+service user{
+	@doc "user register"
 	@handler register
-	post /register (RegisterReq) returns (RegisterResp)
-
-	@doc "用户登入"
+	post /register(RegisterReq) returns(RegisterResp)
+	@doc "user login"
 	@handler login
-	post /login (LoginReq) returns (LoginResp)
+	get /login(LoginReq) returns(LoginResp)
 }
 
-//need login
-//@server (
-// prefix: v1/user
-// group:  user
-// jwt:    Jwt
-//)
-service user {
-	@doc "获取用户信息"
+@server(
+	prefix :v1/user
+	group :user
+	jwt :JwtAuth
+)
+service user{
+	@doc "get user info"
 	@handler detail
-	get /user (UserInfoReq) returns (UserInfoResp)
+	get /detail(UserInfoReq) returns(UserInfoResp)
 }
-

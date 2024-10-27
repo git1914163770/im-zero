@@ -27,7 +27,6 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-
 	loginResp, err := l.svcCtx.User.Login(l.ctx, &user.LoginReq{
 		Phone:    req.Phone,
 		Password: req.Password,
@@ -35,9 +34,8 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	if err != nil {
 		return nil, err
 	}
-
 	var res types.LoginResp
-	copier.Copy(&res, loginResp)
+	_ = copier.Copy(&res, loginResp)
 
 	return &res, nil
 }
